@@ -213,6 +213,7 @@ class TrainModel():
         ACC = []
         ACC_mean = []
         ACC_mean_val = []
+        acc_val = []
         for i in range(subject):
             index = np.arange(trial)
             ACC_subject = []

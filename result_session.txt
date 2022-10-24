@@ -1,0 +1,92 @@
+
+2022-10-03 20:18:47.476413
+Train:Parameter setting for TSception
+1)number_class:2
+2)random_seed:42
+3)learning_rate:0.001
+4)num_epochs:200
+5)batch_size:128
+6)dropout:0.3
+7)sampling_rate:256
+8)hidden_node:128
+9)input_shape:(8, 0, 15001)
+10)patient:4
+11)T:9
+12)S:6
+13)Lambda:1e-06
+
+2022-10-03 20:20:45.547725
+Train:Parameter setting for TSception
+1)number_class:2
+2)random_seed:42
+3)learning_rate:0.001
+4)num_epochs:200
+5)batch_size:128
+6)dropout:0.3
+7)sampling_rate:256
+8)hidden_node:128
+9)input_shape:(8, 0, 15001)
+10)patient:4
+11)T:9
+12)S:6
+13)Lambda:1e-06
+
+2022-10-24 13:41:50.268600
+Train:Parameter setting for TSception
+1)number_class:2
+2)random_seed:42
+3)learning_rate:0.001
+4)num_epochs:200
+5)batch_size:128
+6)dropout:0.3
+7)sampling_rate:256
+8)hidden_node:128
+9)input_shape:(8, 0, 15500)
+10)patient:4
+11)T:9
+12)S:6
+13)Lambda:1e-06
+Subject:0 MeanACC:nan Std:nan
+
+2022-10-24 13:41:50.269556
+MeanACC:nan Std:nan Mean Val ACC:nan
+
+2022-10-24 13:41:54.099557
+Train:Parameter setting for TSception
+1)number_class:2
+2)random_seed:42
+3)learning_rate:0.001
+4)num_epochs:200
+5)batch_size:128
+6)dropout:0.3
+7)sampling_rate:256
+8)hidden_node:128
+9)input_shape:(8, 0, 15500)
+10)patient:4
+11)T:9
+12)S:6
+13)Lambda:1e-06
+Subject:0 MeanACC:nan Std:nan
+
+2022-10-24 13:41:54.100293
+MeanACC:nan Std:nan Mean Val ACC:nan
+
+2022-10-24 14:19:36.374366
+Train:Parameter setting for TSception
+1)number_class:2
+2)random_seed:42
+3)learning_rate:0.001
+4)num_epochs:200
+5)batch_size:128
+6)dropout:0.3
+7)sampling_rate:256
+8)hidden_node:128
+9)input_shape:(8, 1024)
+10)patient:4
+11)T:9
+12)S:6
+13)Lambda:1e-06
+Subject:0 MeanACC:1.0 Std:0.0
+
+2022-10-24 14:24:30.475460
+MeanACC:1.0 Std:0.0 Mean Val ACC:1.0

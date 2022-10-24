@@ -1,25 +1,65 @@
 #This is a script to do pre-processing on the EEG data
 import numpy as np
 import math
+import mne
 import h5py
 import os
 from pathlib import Path
+
 class Processer:
     def __init__(self):
         self.data = None
         self.label = None
         self.data_processed = None
-        self.label_processed = None   
+        self.label_processed = None
+
+    def get_data_one(self, raw_stress):
+        channels = ["EEG 1", "EEG 2", "EEG 3", "EEG 4", "EEG 5", "EEG 6", "EEG 7", "EEG 8"]
+        data = []
+
+        for c in channels:
+            raw, _ = raw_stress[c]
+            data.append(raw.flatten())
+
+        times = raw_stress[c][1]
+        labels = np.ones_like(times)
+
+        for mx in range(5, 61, 5):
+            mn = mx - 5
+            labels[(times >= mn) & (times < mx)] = 1 if mx % 2 == 0 else 0
+            
+        data = np.array(data)
+
+        return data, labels
+
+    def get_data_all(self, paths):
+        all_data = []
+        all_labels = []
+
+        for path in paths:
+            raw_stress = mne.io.read_raw_bdf(path, preload=True, verbose=False)
+            data, labels = self.get_data_one(raw_stress)
+            all_data.append(data)
+            all_labels.append(labels)
+
+        return np.array(all_data), np.array(all_labels)
+
+    def get_data_from_bdf(self, path):
+        raw_stress = mne.io.read_raw_bdf(path, preload=True, verbose=False)
+        #raw_stress.crop(tmin=10, tmax=70)
+        paths = ["data/sub_" + str(i) + ".bdf" for i in range(10)]
+        data, labels = self.get_data_all(paths)
+
+        return np.array(data), np.array(labels)
+
     def load_data(self, path, subject):
         path = Path(path)
         data_list = []
         label_list = []
         for i in range(subject):
-            file_code = 'sub_'+ str(i)+'.hdf'
+            file_code = 'sub_'+ str(i)+'.bdf'
             file = path / file_code
-            data_dictionary = h5py.File(file, 'r')
-            data = data_dictionary['data']
-            label = data_dictionary['label']
+            data, label = self.get_data_from_bdf(file)
             data_list.append(data)
             label_list.append(label)
             print('The shape of data is:'+ str(data_list[-1].shape))
@@ -63,7 +103,10 @@ class Processer:
         
         number_segment = int((label_shape[2]-data_segment)//(data_step)) + 1
         for i in range(number_segment):
-            data_split.append(data[:,:,:,:,(i * data_step):(i * data_step + data_segment)])
+            if i == 0: # added this because the first one wasnt the same shape as the others for some reason
+                continue
+            abc = data[:,:,:,:,(i * data_step):(i * data_step + data_segment)]
+            data_split.append(abc)
             label_split.append(label[:,:,(i * data_step)])
         data_split_array = np.stack(data_split, axis = 2)
         label_split_array = np.stack(label_split, axis = 2)
@@ -91,7 +134,7 @@ class Processer:
 if __name__ == "__main__":
     Pro = Processer() 
     # e.g. path = '/Users/mac/TSception/data'
-    Pro.load_data(path='Your path of the data file',subject=2) 
+    Pro.load_data(path='./data',subject=1) 
     Pro.format_data()      
     Pro.split_data(segment_length = 4, overlap = 0.975, sampling_rate = 256, save = True)
 
