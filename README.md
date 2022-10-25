@@ -11,6 +11,7 @@ python == 3.6 and above
 torch == 1.2.0 and above
 numpy == 1.16.4
 h5py == 2.9.0
+mne
 pathlib 
 ```
 # Run the code
